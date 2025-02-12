@@ -124,6 +124,7 @@ class App {
             if (link?.download) { return }
             let href = link?.getAttribute?.('href');
             if (!href) { return }
+            if (/^[a-zA-Z]+:/.test(href)) { return }
             ev.preventDefault();
             if (href.startsWith('#')) { return }
             let currentPath = location.pathname.split('/').slice(0, -1).join('/');
