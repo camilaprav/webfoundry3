@@ -93,8 +93,10 @@ window.post = async function (action, ...args) {
     let ctrl = loadedControllers[section];
     if (!ctrl) { throw new Error(`Unknown controller: ${section}`) }
     let ret = ctrl.actions[name](...args);
-    if (ret?.then) { await ret }
+    if (ret?.then) { ret = await ret }
     d.update();
+    return ret;
+    // derp
 };
 
 class App {
