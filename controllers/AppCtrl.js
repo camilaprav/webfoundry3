@@ -251,6 +251,7 @@ class AppCtrl {
         if (this.state.currentFile === x) { this.state.currentFile = this.state.replacingStyle = null; await post('editor.changeSelected', null) }
       }
 
+      (x.startsWith('controllers/') || x.endsWith('.html')) && await post('app.generateReflections');
       await post('app.loadFiles');
     },
 
