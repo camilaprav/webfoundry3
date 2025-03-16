@@ -14,7 +14,7 @@ window.tap = x => (console.log(x), x);
 
 class App {
   render = () => d.html`
-    <div class="App min-h-screen flex" ${{ onAttach: () => post('app.reset') }}>
+    <div class="App h-screen flex" ${{ onAttach: () => post('app.reset') }}>
       ${d.el(IconsSidebar)}
       ${d.if(() => state.app.currentPanel === 'wf', d.el(WfPanel))}
       ${d.if(() => state.app.currentPanel === 'sites', d.el(SitesPanel))}
