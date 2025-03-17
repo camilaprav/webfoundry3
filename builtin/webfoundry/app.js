@@ -285,6 +285,13 @@ function compile(root) {
             d.el(x, { value: d.binding({ get: () => wfeval(x, expr), set: y => wfeval(x, `${expr} = ${JSON.stringify(y)}`) }) });
         }
 
+        if (x.getAttribute('wf-value')) {
+            let expr = x.getAttribute('wf-value');
+            x.removeAttribute('wf-value');
+            x.removeAttribute('value');
+            d.el(x, { value: d.binding({ get: () => wfeval(x, expr || 'null'), set: y => wfeval(x, expr ? `${expr} = ${JSON.stringify(y)}` : 'null') }) });
+        }
+
         if (x.tagName === 'TEXTAREA' && /^{{.*?}}$/.test(x.textContent.trim())) {
             let expr = x.textContent.trim().slice(2, -2).trim();
             x.textContent = '';
