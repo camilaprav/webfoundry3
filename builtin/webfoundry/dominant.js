@@ -313,15 +313,7 @@ function createElement(type) {
         continue;
       }
 
-      el.addEventListener(evName, (function(v, ev) {
-        var ret = v(ev);
-        updateSync();
-
-        if (ret && typeof ret.then === 'function') {
-          ret.then(function() { updateSync() });
-        }
-      }).bind(null, v));
-
+      el.addEventListener(evName, v);
       continue;
     }
 
