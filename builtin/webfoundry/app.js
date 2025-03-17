@@ -292,6 +292,13 @@ function compile(root) {
             d.el(x, { value: d.binding({ get: () => wfeval(x, expr || 'null'), set: y => wfeval(x, expr ? `${expr} = ${JSON.stringify(y)}` : 'null') }) });
         }
 
+        if (x.getAttribute('wf-checked')) {
+            let expr = x.getAttribute('wf-checked');
+            x.removeAttribute('wf-checked');
+            x.removeAttribute('checked');
+            d.el(x, { checked: d.binding({ get: () => wfeval(x, expr || 'null'), set: y => wfeval(x, expr ? `${expr} = ${JSON.stringify(y)}` : 'null') }) });
+        }
+
         if (x.tagName === 'TEXTAREA' && /^{{.*?}}$/.test(x.textContent.trim())) {
             let expr = x.textContent.trim().slice(2, -2).trim();
             x.textContent = '';
