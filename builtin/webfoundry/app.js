@@ -20,7 +20,7 @@ let [scripts, templates] = await Promise.all([
     })(),
 ]);
 
-let loadedControllers = Object.fromEntries(await Promise.all(scripts.filter(x => x.startsWith('controllers/')).map(async x => [
+window.rawctrls = Object.fromEntries(await Promise.all(scripts.filter(x => x.startsWith('controllers/')).map(async x => [
     camelCase(x.slice('controllers/'.length).replace(/\.js$/, '')),
     new (await import('../' + x)).default(),
 ])));
@@ -86,11 +86,11 @@ window.selectFile = accept => {
 };
 
 window.state = {};
-for (let [k, v] of Object.entries(loadedControllers)) { state[k] = v.state = v.state ?? {} }
+for (let [k, v] of Object.entries(rawctrls)) { state[k] = v.state = v.state ?? {} }
 
 window.post = async function (action, ...args) {
     let [section, name] = action.split('.');
-    let ctrl = loadedControllers[section];
+    let ctrl = rawctrls[section];
     if (!ctrl) { throw new Error(`Unknown controller: ${section}`) }
     let ret = ctrl.actions[name](...args);
     if (ret?.then) { ret = await ret }
