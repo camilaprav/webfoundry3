@@ -135,6 +135,7 @@ class AppCtrl {
       let files = Object.fromEntries(await Promise.all([
         'webfoundry/app.js',
         'webfoundry/dominant.js',
+        'webfoundry/sonetto-regular.ttf',
         'index.html',
       ].map(async x => [x, await fetchFile(`builtin/${x}`)])));
 
